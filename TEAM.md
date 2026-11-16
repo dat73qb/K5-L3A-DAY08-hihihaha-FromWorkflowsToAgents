@@ -32,7 +32,7 @@ Gợi ý chia vai:
 | --- | --- | --- | --- |
 | Nguyễn Quang Vũ | Workflow & Deterministic Engine |  | tests/test_workflow_custom.py |
 | Nguyễn Tiến Đạt | Single ReAct & Multi-Agent Orchestrator | 63b2293 | tests/test_agents_custom.py |
-| Nguyễn Quang Trung | Durability, Benchmark & Evaluation |  | tests/test_durability_custom.py |
+| Nguyễn Quang Trung | Durability, Benchmark & Evaluation | 7a42315 | tests/test_durability_custom.py |
 
 ## Cá nhân
 
@@ -93,4 +93,32 @@ report/team/MSSV_HoTen.md
 - File test: `src/tests/test_agents_custom.py` (4 tests passed).
 - Kết quả kiểm thử: 62/62 test student của `single` và 62/62 test student của `orchestrator` pass.
 - Báo cáo chi tiết: `report/team/2A202603452_NguyenTienDat.md`.
+
+## 2A202603389_NguyenQuangTrung
+
+### Phần việc phụ trách
+
+- Thực thi bộ kiểm thử va đập (Crash Safety Suite) và kiểm chứng tính lũy đẳng (idempotency), trần hoàn tiền theo đơn (order cap).
+- Chạy benchmark định lượng trên cả 4 kiến trúc (`workflow`, `single`, `orchestrator`, `swarm`) với 5 seeds (`11, 22, 33, 44, 55`).
+- Viết bộ unit test `src/tests/test_durability_custom.py`.
+- Chủ trì soạn thảo tài liệu quyết định kiến trúc `report/team/decision_adr.md` và phiếu nghiên cứu `report/team/research_card.md`.
+
+### Đóng góp cụ thể
+
+- **Kiểm thử Durability & Crash Safety:**
+  - Chạy `lab8.crash_test` sinh báo cáo `src/reports/crash.json` đạt `20/20` kịch bản (`CR-01` đến `CR-20`), kiểm chứng an toàn trước/sau effect, sau checkpoint, xung đột số tiền khi retry và retry thiếu approval.
+  - Viết `src/tests/test_durability_custom.py` gồm 3 unit test: kiểm tra idempotency với khóa `refund:{claim_id}` (`test_idempotent_replay_single_ledger_row`), phục hồi sau `InjectedCrash` (`test_crash_recovery_deterministic_state`), và bù trừ chênh lệch theo trần đơn hàng trên `C-014`/`O-515` (`test_order_cap_differential_topup`).
+- **Đo lường Benchmark (4 Shapes × 5 Seeds):**
+  - Chạy `lab8.benchmark` trên 14 public claims (`C-001`..`C-014`) và 5 seeds (`11, 22, 33, 44, 55`), xuất kết quả vào `src/reports/benchmark.json` (70 trials cho mỗi shape).
+  - Tổng hợp các chỉ số: `pass_rate`, `pass_5`, `seed_variance`, `cost_per_success_vnd`, `mean_steps` để làm cơ sở chọn `workflow` (pass rate `1.0`, pass^5 `1.0`, variance `0.0`, cost/success `27.86` VND).
+- **Hoàn thiện ADR & Research Card:**
+  - Điền `report/team/decision_adr.md`: phân tích lý do chọn `workflow`, điều kiện đảo quyết định kiến trúc, ranh giới trace/allowlist và các giới hạn của `MockLLM`.
+  - Điền `report/team/research_card.md` theo câu R2 (*Why Do Multi-Agent LLM Systems Fail?*, NeurIPS 2025): lập giả thuyết và đối chiếu kết quả ablation lỗi Verification Breakdown của `swarm` tại `C-002` seed `55`.
+
+### Bằng chứng
+
+- Commit: `7a42315` (`feat(eval): add durability custom tests, crash safety suite and benchmark reports 1`), `a40a8a1` (`feat(eval): add durability custom tests, crash safety suite and benchmark reports 2`), merge PR #2 (`1d1bb04`) từ nhánh `nguyenquangtrung-03389`.
+- File báo cáo & cấu hình: `src/reports/crash.json` (`20/20`), `src/reports/benchmark.json`, `report/team/decision_adr.md`, `report/team/research_card.md`, `.vscode/settings.json`.
+- File test: `src/tests/test_durability_custom.py` (`3 passed in 0.32s`).
+- Báo cáo chi tiết: `report/team/2A202603389_NguyenQuangTrung.md`.
 
