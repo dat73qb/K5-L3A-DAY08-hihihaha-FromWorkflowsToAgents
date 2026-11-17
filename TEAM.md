@@ -7,8 +7,9 @@
 - Repo nhóm: `K5-L3A-DAY08-hihihaha-FromWorkflowsToAgents` (xem [SUBMISSION.md](SUBMISSION.md))
 - URL repo, nhánh nộp, commit chốt:
   - URL repo: https://github.com/dat73qb/K5-L3A-DAY08-hihihaha-FromWorkflowsToAgents.git
-  - Nhánh nộp: 
-  - Commit chốt: 
+  - Nhánh nộp: main 
+  - Commit chốt: 04fb055
+
 
 ## Thành viên 
 
@@ -30,8 +31,7 @@ Gợi ý chia vai:
 
 | Người | Vai | Commit | Test đã thêm hoặc sửa |
 | --- | --- | --- | --- |
-| Nguyễn Quang Vũ | Workflow & Deterministic Engine | e665c23
- | tests/test_workflow_custom.py |
+| Nguyễn Quang Vũ | Workflow & Deterministic Engine | e665c23 | tests/test_workflow_custom.py |
 | Nguyễn Tiến Đạt | Single ReAct & Multi-Agent Orchestrator | 63b2293 | tests/test_agents_custom.py |
 | Nguyễn Quang Trung | Durability, Benchmark & Evaluation | 7a42315 | tests/test_durability_custom.py |
 
